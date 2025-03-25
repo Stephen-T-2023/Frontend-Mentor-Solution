@@ -9,6 +9,8 @@ export default function App() {
     mortgageType: "",
   });
 
+  const [monthlyPayment, setMonthlyPayment] = useState(null)
+
   // Handle input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -18,26 +20,54 @@ export default function App() {
     });
   };
 
+  const calculateMortgage = () => {
+    const { mortgageAmount, mortgageTerm, interestRate, mortgageType } = formData;
+
+    const P = parseFloat(mortgageAmount); // Loan amount (Principal)
+    const n = parseFloat(mortgageTerm) * 12; // Number of monthly payments
+    const r = parseFloat(interestRate) / 100 / 12; // Monthly interest rate
+
+    if (!P || !n || isNaN(r) || r < 0) {
+      setMonthlyPayment("Invalid input");
+      return;
+    }
+
+    let payment;
+    if (mortgageType === "interest-only") {
+      payment = P * r; // Interest-only formula
+    } else {
+      if (r === 0) {
+        // No interest case (pure division)
+        payment = P / n;
+      } else {
+        // Standard mortgage calculation
+        payment = (P * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+      }
+    }
+
+    setMonthlyPayment(payment.toFixed(2)); // Format to 2 decimal places
+  };
+
+
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData); // This will log the form data to the console
-    // You can add your calculation logic here
+    calculateMortgage();
   };
 
   return (
-    <div className="bg-slate-300 w-screen h-screen flex items-center justify-center">
+    <div className="bg-slate-300 text-slate-900 w-screen h-screen flex items-center justify-center">
       <div className="bg-slate-100 border-4 border-black w-3/5 h-3/5 flex rounded-3xl">
         {/* Left Side */}
         <div className="w-1/2 h-full flex flex-col p-6 space-y-4">
           {/* Title and Clear All Button */}
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-bold">Mortgage Calculator</h2>
-            <button
-              className="bg-red-500 text-white px-3 py-1 rounded-md"
-              onClick={() => setFormData({ ...formData, mortgageAmount: "", mortgageTerm:"", interestRate:"", mortgageType: "" })}>
+            <a
+              className="px-3 underline"
+              href="/">
               Clear All
-            </button>
+            </a>
           </div>
 
           {/* Form */}
@@ -51,7 +81,7 @@ export default function App() {
                 value={formData.mortgageAmount}
                 onChange={handleInputChange}
                 className="w-full border rounded-md p-4 pl-12 text-lg"/>
-              <span className="absolute left-4 top-1/2 transform -translate-y-1/4 text-gray-500 text-3xl">£</span> {/* Pound sign */}
+              <span className="absolute left-4 top-1/2 transform -translate-y-1/4 text-gray-500 text-3xl ">£</span> {/* Pound sign */}
             </div>
 
             {/* Mortgage Term and Interest Rate */}
@@ -89,7 +119,7 @@ export default function App() {
                 {/* Repayment Option */}
                 <label
                   className={`flex items-center space-x-3 p-4 rounded-md cursor-pointer ${
-                    formData.mortgageType === "repayment" ? "bg-blue-500 text-white" : "bg-gray-200"}`}>
+                    formData.mortgageType === "repayment" ? "bg-[color:hsl(61,_70%,_52%)] bg-opacity-80" : "bg-gray-200"}`}>
                   <input
                     type="radio"
                     name="mortgageType"
@@ -109,7 +139,7 @@ export default function App() {
                 {/* Interest Only Option */}
                 <label
                   className={`flex items-center space-x-3 p-4 rounded-md cursor-pointer ${
-                    formData.mortgageType === "interest-only" ? "bg-blue-500 text-white" : "bg-gray-200"}`}>
+                    formData.mortgageType === "interest-only" ? "bg-[color:hsl(61,_70%,_52%)] bg-opacity-80" : "bg-gray-200"}`}>
                   <input
                     type="radio"
                     name="mortgageType"
@@ -131,15 +161,18 @@ export default function App() {
             {/* Calculate Button */}
             <button
               type="submit"
-              className="bg-green-500 text-white w-full p-4 rounded-md mt-auto">
-              Calculate
+              className="bg-[color:hsl(61,_70%,_52%)] w-full p-4 rounded-md mt-auto">
+              Calculate Repayments
             </button>
           </form>
         </div>
 
         {/* Right Side */}
-        <div className="bg-slate-900 w-1/2 h-full flex items-center justify-center rounded-bl-3xl">
-          Right Side
+        <div className="bg-slate-900 w-1/2 h-full flex flex-col items-center justify-center text-white rounded-bl-3xl p-6">
+          <h3 className="text-xl font-bold">Monthly Payment</h3>
+          <p className="text-3xl mt-2">
+            {monthlyPayment !== null ? `£${monthlyPayment}` : "—"}
+          </p>
         </div>
       </div>
     </div>
