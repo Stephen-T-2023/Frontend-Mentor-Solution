@@ -35,8 +35,7 @@ export default function App() {
             <h2 className="text-xl font-bold">Mortgage Calculator</h2>
             <button
               className="bg-red-500 text-white px-3 py-1 rounded-md"
-              onClick={() => setFormData({ ...formData, mortgageAmount: "", mortgageTerm:"", interestRate:"", mortgageType: "" })}
-            >
+              onClick={() => setFormData({ ...formData, mortgageAmount: "", mortgageTerm:"", interestRate:"", mortgageType: "" })}>
               Clear All
             </button>
           </div>
@@ -51,9 +50,8 @@ export default function App() {
                 name="mortgageAmount"
                 value={formData.mortgageAmount}
                 onChange={handleInputChange}
-                className="w-full border rounded-md p-4 pl-12 text-lg"
-              />
-              <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-lg">£</span> {/* Pound sign */}
+                className="w-full border rounded-md p-4 pl-12 text-lg"/>
+              <span className="absolute left-4 top-1/2 transform -translate-y-1/4 text-gray-500 text-3xl">£</span> {/* Pound sign */}
             </div>
 
             {/* Mortgage Term and Interest Rate */}
@@ -66,8 +64,7 @@ export default function App() {
                     name="mortgageTerm"
                     value={formData.mortgageTerm}
                     onChange={handleInputChange}
-                    className="w-full outline-none text-lg"
-                  />
+                    className="w-full outline-none text-lg"/>
                   <span className="ml-2 text-gray-500 text-lg">Years</span> {/* Years label */}
                 </div>
               </div>
@@ -79,8 +76,7 @@ export default function App() {
                     name="interestRate"
                     value={formData.interestRate}
                     onChange={handleInputChange}
-                    className="w-full outline-none text-lg"
-                  />
+                    className="w-full outline-none text-lg"/>
                   <span className="ml-2 text-gray-500 text-lg">%</span> {/* Percentage symbol */}
                 </div>
               </div>
@@ -93,25 +89,19 @@ export default function App() {
                 {/* Repayment Option */}
                 <label
                   className={`flex items-center space-x-3 p-4 rounded-md cursor-pointer ${
-                    formData.mortgageType === "repayment" ? "bg-blue-500 text-white" : "bg-gray-200"
-                  }`}
-                >
+                    formData.mortgageType === "repayment" ? "bg-blue-500 text-white" : "bg-gray-200"}`}>
                   <input
                     type="radio"
                     name="mortgageType"
                     value="repayment"
                     checked={formData.mortgageType === "repayment"}
                     onChange={handleInputChange}
-                    className="hidden"
-                  />
+                    className="hidden"/>
                   <div
                     className={`w-5 h-5 border-2 rounded-full flex items-center justify-center ${
-                      formData.mortgageType === "repayment" ? "border-white" : "border-gray-500"
-                    }`}
-                  >
+                      formData.mortgageType === "repayment" ? "border-white" : "border-gray-500"}`}>
                     {formData.mortgageType === "repayment" && (
-                      <div className="w-3 h-3 bg-white rounded-full"></div>
-                    )}
+                      <div className="w-3 h-3 bg-white rounded-full"></div>)}
                   </div>
                   <span>Repayment</span>
                 </label>
@@ -119,25 +109,19 @@ export default function App() {
                 {/* Interest Only Option */}
                 <label
                   className={`flex items-center space-x-3 p-4 rounded-md cursor-pointer ${
-                    formData.mortgageType === "interest-only" ? "bg-blue-500 text-white" : "bg-gray-200"
-                  }`}
-                >
+                    formData.mortgageType === "interest-only" ? "bg-blue-500 text-white" : "bg-gray-200"}`}>
                   <input
                     type="radio"
                     name="mortgageType"
                     value="interest-only"
                     checked={formData.mortgageType === "interest-only"}
                     onChange={handleInputChange}
-                    className="hidden"
-                  />
+                    className="hidden"/>
                   <div
                     className={`w-5 h-5 border-2 rounded-full flex items-center justify-center ${
-                      formData.mortgageType === "interest-only" ? "border-white" : "border-gray-500"
-                    }`}
-                  >
+                      formData.mortgageType === "interest-only" ? "border-white" : "border-gray-500"}`}>
                     {formData.mortgageType === "interest-only" && (
-                      <div className="w-3 h-3 bg-white rounded-full"></div>
-                    )}
+                      <div className="w-3 h-3 bg-white rounded-full"></div>)}
                   </div>
                   <span>Interest Only</span>
                 </label>
@@ -147,8 +131,7 @@ export default function App() {
             {/* Calculate Button */}
             <button
               type="submit"
-              className="bg-green-500 text-white w-full p-4 rounded-md mt-auto"
-            >
+              className="bg-green-500 text-white w-full p-4 rounded-md mt-auto">
               Calculate
             </button>
           </form>
